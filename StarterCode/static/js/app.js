@@ -12,21 +12,22 @@ submit.on("click", function() {
     // Prevent the page from refreshing
     d3.event.preventDefault();
 
-    var filterValues = [{"datetime":""}, {"city":""}, {"state":""}, {"country":""}, {"shape":""}];
+    var filterValues = []
 
     possibleFilters.forEach((pf, index) => {
         var inputElement = d3.select("#"+pf);
         var inputValue = inputElement.property("value");
-        filterValues[index][pf]=inputValue;
+        var filterObject = {}
+        filterObject[pf]= inputValue;
+        filterValues.push(filterObject)
     });
+
+    console.log(filterValues)
 
     var filteredData = tableData;
 
     filterValues.forEach((fv) => {
-        // console.log(`Current index: ${index}`)
-        console.log(fv)
         currentKey = Object.keys(fv)[0]
-        // console.log(currentKey)
         if (fv[currentKey] !== "") {
             console.log(filteredData)
             filteredData = filteredData.filter(siting => siting[currentKey] === fv[currentKey]);
